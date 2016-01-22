@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Taskerize</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Get lost section: %1$d</string>
+    <string name="add_person">Add a person</string>
+    <string name="first_name">Enter first name</string>
+    <string name="last_name">Enter last name</string>
+    <string name="relation">Choose relation</string>
+    <string name="sex">Choose a sex</string>
+    <string name="add_person_button">Add Person</string>
+</resources>
+

@@ -1,6 +1,7 @@
-package at.app.sila.mainactivity;
+package at.app.sila.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 import at.app.sila.R;
-import at.app.sila.people.PeopleService;
+import at.app.sila.adapter.PeopleAdapter;
+import at.app.sila.mainactivity.MainActivity;
 import at.app.sila.people.Person;
-import at.app.sila.people.ServiceFactory;
+import at.app.sila.people.RelationshipType;
+import at.app.sila.service.ServiceProvider;
+import at.app.sila.service.people.PeopleService;
 
 /**
  * Created by AAbdalla on 07.01.2016.
@@ -32,24 +36,17 @@ public class PeopleSectionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ServiceFactory<PeopleService> serviceFactory = MainActivity.getServiceFactory();
+        ServiceProvider<PeopleService> serviceFactory = MainActivity.getServiceFactory();
         // get the listview
         expListView = (ExpandableListView) rootView.findViewById(R.id.lvExp);
+        List<String> familyGroupingList = getFamilyGroupingList();
 
-        // preparing list data
-        List<String> listDataHeader = new ArrayList<String>();
-        listDataHeader.add("Family");
-        listDataHeader.add("Wider Family");
-        listDataHeader.add("Friends");
-        System.out.println("################### adding data");
-        Map<String,List<Person>> listDataChild = new HashMap<String,List<Person>>();
-        listDataChild.put(listDataHeader.get(0),serviceFactory.createService().getCloseFamily());
-        listDataChild.put(listDataHeader.get(1),serviceFactory.createService().getGreatFamily());
-        listDataChild.put(listDataHeader.get(2),serviceFactory.createService().getFriends());
+        Map<String, List<Person>> childElementList = getFamilyChildElementList(serviceFactory, familyGroupingList);
 
-        ExpandableListAdapter<Person> listAdapter = new ExpandableListAdapter<Person>(this.getActivity(), listDataHeader, listDataChild);
-        Log.d("PeopleSectionFragment","adapter was set!");
+        PeopleAdapter listAdapter = new PeopleAdapter(this.getActivity(), familyGroupingList, childElementList);
+        Log.d("PeopleSectionFragment", "adapter was set!");
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
@@ -79,6 +76,26 @@ public class PeopleSectionFragment extends Fragment {
         */
         return rootView;
 
+    }
+
+    @NonNull
+    private Map<String, List<Person>> getFamilyChildElementList(ServiceProvider<PeopleService> serviceFactory, List<String> familyGroupingList) {
+        Map<String,List<Person>> listDataChild = new HashMap<String,List<Person>>();
+        listDataChild.put(familyGroupingList.get(0),serviceFactory.createService().getCloseFamily());
+        listDataChild.put(familyGroupingList.get(1),serviceFactory.createService().getGreatFamily());
+        listDataChild.put(familyGroupingList.get(2),serviceFactory.createService().getFriends());
+        return listDataChild;
+    }
+
+    @NonNull
+    private List<String> getFamilyGroupingList() {
+        // preparing list data
+        List<String> listDataHeader = new ArrayList<String>();
+        listDataHeader.add(RelationshipType.Family.name());
+        listDataHeader.add(RelationshipType.Wider_Family.name());
+        listDataHeader.add(RelationshipType.Friends.name());
+        listDataHeader.add(RelationshipType.Colleagues.name());
+        return listDataHeader;
     }
 
 }

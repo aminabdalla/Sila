@@ -1,4 +1,4 @@
-package at.app.sila.mainactivity;
+package at.app.sila.fragments;
 
 
 import android.os.Bundle;

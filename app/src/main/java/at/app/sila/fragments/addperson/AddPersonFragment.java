@@ -1,4 +1,4 @@
-package at.app.sila.addpersonactivity;
+package at.app.sila.fragments.addperson;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

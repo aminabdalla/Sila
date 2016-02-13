@@ -1,10 +1,13 @@
-package at.app.sila.people;
+package at.app.sila.service.people;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import at.app.sila.people.Person;
+import at.app.sila.people.Relation;
 
 /**
  * Created by AAbdalla on 03.01.2016.

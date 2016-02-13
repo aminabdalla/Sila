@@ -1,4 +1,4 @@
-package at.app.sila.addpersonactivity;
+package at.app.sila.activities.addperson;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,8 +26,6 @@ public class AddPersonActivity extends AppCompatActivity {
     }
 
     public void addPerson(View view){
-
-
         Intent back2MainIntent = new Intent(view.getContext(), MainActivity.class);
         back2MainIntent.putExtra("name","Geddo");
         back2MainIntent.putExtra("relation", Relation.FATHER);

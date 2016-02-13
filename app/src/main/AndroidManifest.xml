@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="at.app.sila.addpersonactivity.AddPersonActivity"
+            android:name=".activities.addperson.AddPersonActivity"
             android:label="@string/add_person"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

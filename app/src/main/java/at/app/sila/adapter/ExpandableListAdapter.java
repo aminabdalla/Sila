@@ -1,4 +1,4 @@
-package at.app.sila.mainactivity;
+package at.app.sila.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -15,12 +15,12 @@ import java.util.Map;
 
 import at.app.sila.R;
 
-public class ExpandableListAdapter<TYPE extends Object> extends BaseExpandableListAdapter {
+public abstract class ExpandableListAdapter<TYPE extends Object> extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+    protected List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private Map<String, List<TYPE>> _listDataChild;
+    protected Map<String, List<TYPE>> _listDataChild;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  Map<String, List<TYPE>> listChildData) {
@@ -38,6 +38,10 @@ public class ExpandableListAdapter<TYPE extends Object> extends BaseExpandableLi
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
+    }
+
+    public void addChildByGroupId(int groupPosition,TYPE child){
+        this._listDataChild.get(this._listDataHeader.get(groupPosition)).add(child);
     }
 
     @Override
@@ -106,4 +110,6 @@ public class ExpandableListAdapter<TYPE extends Object> extends BaseExpandableLi
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }

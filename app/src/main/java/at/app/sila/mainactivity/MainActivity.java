@@ -14,24 +14,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 
 import java.util.HashSet;
 
 import at.app.sila.R;
-import at.app.sila.addpersonactivity.AddPersonActivity;
-import at.app.sila.people.PeopleService;
+import at.app.sila.activities.addperson.AddPersonActivity;
+import at.app.sila.adapter.PeopleAdapter;
+import at.app.sila.fragments.SectionFragmentFactory;
 import at.app.sila.people.Person;
 import at.app.sila.people.Relation;
-import at.app.sila.people.ServiceFactory;
-import at.app.sila.people.ServiceFactoryImpl;
 import at.app.sila.people.Sex;
 import at.app.sila.places.Place;
+import at.app.sila.service.ServiceProvider;
+import at.app.sila.service.ServiceProviderImpl;
+import at.app.sila.service.people.PeopleService;
 import at.app.sila.things.Thing;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ServiceFactory<PeopleService> peopleServiceFactory;
-    public static  ServiceFactory<PeopleService> getServiceFactory() {return peopleServiceFactory;};
+    private static ServiceProvider<PeopleService> peopleServiceFactory;
+    public static ServiceProvider<PeopleService> getServiceFactory() {return peopleServiceFactory;};
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        peopleServiceFactory = new ServiceFactoryImpl();
+        peopleServiceFactory = new ServiceProviderImpl();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
           public void onClick(View view) {
               Intent addPersonIntend = new Intent(view.getContext(), AddPersonActivity.class);
               startActivityForResult(addPersonIntend, 1);
-
           }
       });
 
@@ -113,13 +115,14 @@ public class MainActivity extends AppCompatActivity {
             Place place = (Place) data.getSerializableExtra("place");
             Sex sex = (Sex) data.getSerializableExtra("sex");
             Person addedPerson = new Person(name, relation, sex, place, new HashSet<Thing>());
-            MainActivity.peopleServiceFactory.createService().addEntity(addedPerson);
+            PeopleService pService = MainActivity.getServiceFactory().createService();
+            pService.addEntity(addedPerson);
+            ExpandableListView expListView = (ExpandableListView) this.findViewById(R.id.lvExp);
+            PeopleAdapter adapter = (PeopleAdapter) expListView.getExpandableListAdapter();
+            adapter.update();
 
-            //mViewPager.removeView(findViewById(R.id.tabs));
-            //mViewPager.refreshDrawableState();
-            mViewPager.invalidate();
-            //TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-            //tabLayout.setupWithViewPager(mViewPager);
+
+            System.out.println("################### adapter was notified children count: "+adapter.getChildrenCount(1));
         }
     }
 

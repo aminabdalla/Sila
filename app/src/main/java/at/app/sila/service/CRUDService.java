@@ -1,6 +1,8 @@
-package at.app.sila.people;
+package at.app.sila.service;
 
 import java.util.List;
+
+import at.app.sila.people.Person;
 
 /**
  * Created by AAbdalla on 03.01.2016.

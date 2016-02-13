@@ -1,4 +1,4 @@
-package at.app.sila.mainactivity;
+package at.app.sila.fragments;
 
 import android.support.v4.app.Fragment;
 
@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 public class SectionFragmentFactory {
 
 
-    static Fragment createSectionFragment(int sectionnumber){
+    public static Fragment createSectionFragment(int sectionnumber){
 
         switch (sectionnumber) {
             case 0:

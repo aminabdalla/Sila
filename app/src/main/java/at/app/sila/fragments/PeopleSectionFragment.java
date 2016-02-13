@@ -3,7 +3,6 @@ package at.app.sila.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +41,8 @@ public class PeopleSectionFragment extends Fragment {
         // get the listview
         expListView = (ExpandableListView) rootView.findViewById(R.id.lvExp);
         List<String> familyGroupingList = getFamilyGroupingList();
-
         Map<String, List<Person>> childElementList = getFamilyChildElementList(serviceFactory, familyGroupingList);
-
         PeopleAdapter listAdapter = new PeopleAdapter(this.getActivity(), familyGroupingList, childElementList);
-        Log.d("PeopleSectionFragment", "adapter was set!");
         // setting list adapter
         expListView.setAdapter(listAdapter);
 

@@ -22,6 +22,8 @@ import at.app.sila.R;
 import at.app.sila.activities.addperson.AddPersonActivity;
 import at.app.sila.adapter.PeopleAdapter;
 import at.app.sila.fragments.SectionFragmentFactory;
+import at.app.sila.fragments.addplace.PlaceFragment;
+import at.app.sila.fragments.addplace.dummy.DummyContent;
 import at.app.sila.people.Person;
 import at.app.sila.people.Relation;
 import at.app.sila.people.Sex;
@@ -31,7 +33,7 @@ import at.app.sila.service.ServiceProviderImpl;
 import at.app.sila.service.people.PeopleService;
 import at.app.sila.things.Thing;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PlaceFragment.OnListFragmentInteractionListener{
 
     private static ServiceProvider<PeopleService> peopleServiceFactory;
     public static ServiceProvider<PeopleService> getServiceFactory() {return peopleServiceFactory;};
@@ -124,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println("################### adapter was notified children count: "+adapter.getChildrenCount(1));
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 
     /**
